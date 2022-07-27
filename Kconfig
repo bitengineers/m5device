@@ -8,15 +8,12 @@ menu "m5device"
       bool "M5Stack Core 2"
   endchoice
 
-  config M5STICKC_PLUS_I2C
-    prompt "Port A Configuration"
-    help
-      Port A configuration
-    config M5STICKC_PLUS_I2C_ENABLE
-      bool "Enable I2C"
-      default n
+  config M5STICKC_PLUS_I2C_ENABLE
+    depends on M5DEVICE_STICKC_PLUS || M5DEVICE_STACK_CORE2
+    default n
+    bool "Enable I2C"
 
-  choice M5STICKC_PLUS_I2C_NUM
+  choice M5STICKC_PLUS_I2C_INS
     prompt "I2C instance"
     depends on M5STICKC_PLUS_I2C_ENABLE
     default M5STICKC_PLUS_I2C_NUM_0
@@ -26,13 +23,13 @@ menu "m5device"
       bool "I2C_NUM_1"
   endchoice
 
-choice M5STICKC_PLUS_I2C_MODE
+  choice M5STICKC_PLUS_I2C_MODE
     prompt "I2C Mode"
     depends on M5STICKC_PLUS_I2C_ENABLE
     default M5STICKC_PLUS_I2C_MASTER
     config M5STICKC_PLUS_I2C_MASTER
       bool "master mode"
-    config M5STICKC_PLuS_I2C_SLAVE
+    config M5STICKC_PLUS_I2C_SLAVE
       bool "slave mode"
   endchoice
 

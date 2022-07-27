@@ -6,10 +6,10 @@
 
 #include "esp_err.h"
 
-#if defined M5DEVICE_STICKC_PLUS
+#if defined CONFIG_M5DEVICE_STICKC_PLUS
 #define M5DEVICE_PORTA_SDA      21
 #define M5DEVICE_PORTA_SCL      22
-#elif defined M5DEVICE_STACK_CORE2
+#elif defined CONFIG_M5DEVICE_STACK_CORE2
 //...
 #endif // M5DEVICE_TYPE
 
