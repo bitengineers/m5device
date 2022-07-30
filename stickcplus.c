@@ -24,11 +24,11 @@ esp_err_t m5device_init(void)
       vSemaphoreCreateBinary(sem);
     }
 
-#ifdef CONFIG_M5STICKC_PLUS_I2C
+#ifdef CONFIG_M5STICKC_PLUS_I2C_ENABLE
     ESP_ERROR_CHECK(m5device_i2c_init());
 #endif // CONFIG_M5STICKC_PLUS_I2C
 
-    if (xSemaphoreTake(sem, (TickType_t) 10) == pdTRUE) {
+    if (xSemaphoreTake(sem, (TickType_t) portMAX_DELAY) == pdTRUE) {
       m5device_is_initialized = true;
       xSemaphoreGive(sem);
     } else {
@@ -44,7 +44,7 @@ esp_err_t m5device_init(void)
 esp_err_t m5device_deinit(void)
 {
   if (m5device_is_initialized) {
-    if (xSemaphoreTake(sem, (TickType_t) 10) == pdTRUE) {
+    if (xSemaphoreTake(sem, (TickType_t) portMAX_DELAY) == pdTRUE) {
       m5device_is_initialized = false;
       xSemaphoreGive(sem);
     } else {
@@ -89,7 +89,7 @@ esp_err_t m5device_i2c_init(void)
     .master.clk_speed = clk
   };
 
-  if (xSemaphoreTake(sem, (TickType_t) 10) == pdTRUE) {
+  if (xSemaphoreTake(sem, (TickType_t) portMAX_DELAY) == pdTRUE) {
     ESP_ERROR_CHECK(i2c_param_config(i2c_port, &i2c_config));
     ESP_ERROR_CHECK(i2c_driver_install(i2c_port, mode, 0, 0, 0));
     _m5device_i2c_is_initialized = true;
@@ -110,7 +110,7 @@ esp_err_t m5device_i2c_deinit(void)
 #ifdef CONFIG_M5STICKC_PLUS_I2C_NUM_1
   i2c_port = I2C_NUM_1;
 #endif // CONFIG_M5STICKC_PLUS_I2C_NUM_1
-  if (xSemaphoreTake(sem, (TickType_t) 10) == pdTRUE) {
+  if (xSemaphoreTake(sem, (TickType_t) portMAX_DELAY) == pdTRUE) {
     err =  i2c_driver_delete(i2c_port);
     xSemaphoreGive(sem);
   } else {
