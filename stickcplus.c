@@ -12,7 +12,7 @@
 
 bool m5device_is_initialized = false;
 static bool _m5device_i2c_is_initialized = false;
-SemaphoreHandle_t sem = NULL;
+static SemaphoreHandle_t sem = NULL;
 
 /**
  * M5device initialization
